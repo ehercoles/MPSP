@@ -1,0 +1,75 @@
+﻿@model MPSP.Models.Processo
+
+@{
+    ViewData["Title"] = "Adicionar";
+}
+
+<h4>Adicionar Processo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Numero" class="control-label"></label>
+                <br />
+                <input asp-for="NumeroPrefixo" class="control-label" value="@(new Random().Next(001, 999).ToString("000"))" readonly="readonly" style="width:60px;" />-
+                <input asp-for="Numero" class="form-control" style="width:150px; display:inline;" onblur="appendLeadingZeros(this)" onfocus="this.value=''" />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoProcesso" class="control-label"></label>
+                <select asp-for="TipoProcesso" class="form-control" asp-items="Html.GetEnumSelectList<TipoProcesso>()">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="TipoProcesso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Documento" class="control-label"></label>
+                <input type="file" name="FormFile" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label asp-for="Observacao" class="control-label"></label>
+                <textarea asp-for="Observacao" class="form-control" style="width:600px;"></textarea>
+                <span asp-validation-for="Observacao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h4><label asp-for="Partes" class="control-label"></label></h4>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Sigiloso" />
+                        <label asp-for="Sigiloso" class="control-label" style="margin-left:16px;"></label>
+                    </label>
+                </div>
+
+                @for (var i = 0; i < Model.Partes.Count; i++)
+                {
+                    <partial name="~/Views/Partes/_Parte.cshtml" for="Partes[i]" />
+                    <hr />
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-light border-secondary">Cancelar</a>
+            </div>
+            <br />
+            <br />
+            <br />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            $('#Sigiloso').attr('checked', true);
+        });
+    </script>
+}

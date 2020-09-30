@@ -1,0 +1,84 @@
+﻿@model MPSP.Models.Processo
+
+@{
+    ViewData["Title"] = "Alterar";
+}
+
+<h4>Alterar Processo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data" onsubmit="liberarValidacaoDemo()">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Numero" class="control-label"></label>
+                <br />
+                <input asp-for="NumeroPrefixo" class="control-label" readonly="readonly" style="width:60px;" />-
+                <input asp-for="Numero" class="form-control" style="width:150px; display:inline;" onblur="appendLeadingZeros(this)" />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoProcesso" class="control-label"></label>
+                <select asp-for="TipoProcesso" class="form-control" asp-items="Html.GetEnumSelectList<TipoProcesso>()">
+                </select>
+                <span asp-validation-for="TipoProcesso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Documento" />
+                <input type="hidden" asp-for="ExtensaoDocumento" />
+
+                <label asp-for="Documento" class="control-label"></label>
+                <a asp-action="Download" asp-route-id="@Model.Id" class="form-control btn btn-secondary">
+                    <span class="glyphicon glyphicon-download"></span> Baixar
+                </a>
+                <input type="file" name="FormFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Observacao" class="control-label"></label>
+                <input asp-for="Observacao" class="form-control" />
+                <span asp-validation-for="Observacao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h4><label asp-for="Partes" class="control-label"></label></h4>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Sigiloso" />
+                        <label asp-for="Sigiloso" class="control-label" style="margin-left:16px;"></label>
+                    </label>
+                </div>
+                <div id="divDemo" style="display:none;">
+                    <partial name="~/Views/Partes/_Parte.cshtml" for="Partes[0]" />
+                </div>
+
+                @for (var i = 1; i < Model.Partes.Count; i++)
+                {
+                    <partial name="~/Views/Partes/_Parte.cshtml" for="Partes[i]" />
+                    <hr />
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-light border-secondary">Cancelar</a>
+            </div>
+            <br />
+            <br />
+            <br />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function liberarValidacaoDemo() {
+            $('#divDemo .parte').attr('disabled', true);
+        }
+    </script>
+}

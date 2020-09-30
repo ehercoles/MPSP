@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MPSP.Models.Processo>
+
+@{
+    ViewData["Title"] = "Teste C#";
+}
+
+<h1>Processos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus-sign"></span> Adicionar
+    </a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Numero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoProcesso)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Numero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoProcesso)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">
+                        <span class="glyphicon glyphicon-open"></span> Detalhes
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">
+                        <span class="glyphicon glyphicon-edit"></span> Alterar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

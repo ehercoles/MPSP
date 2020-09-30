@@ -1,0 +1,24 @@
+﻿@model MPSP.Models.Parte
+
+<div class="form-group">
+    <input type="hidden" asp-for="Id" />
+    <label asp-for="Cpf" class="control-label"></label>
+    <input asp-for="Cpf" class="form-control cpf parte" required />
+    <span asp-validation-for="Cpf" class="text-danger parteVal"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Nome" class="control-label"></label>
+    <input asp-for="Nome" class="form-control parte" required />
+    <span asp-validation-for="Nome" class="text-danger parteVal"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Sexo" class="control-label"></label>
+    <select asp-for="Sexo" class="form-control parte" asp-items="Html.GetEnumSelectList<Sexo>()" required>
+        <option value=""></option>
+    </select>
+    <span asp-validation-for="Sexo" class="text-danger parteVal"></span>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

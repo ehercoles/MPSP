@@ -1,0 +1,72 @@
+﻿@model MPSP.Models.Processo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Processo</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumeroProcesso)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TipoProcesso)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TipoProcesso)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Documento)
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-action="Download" asp-route-id="@Model.Id" class="btn btn-secondary">
+                <span class="glyphicon glyphicon-download"></span> Baixar
+            </a>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Observacao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observacao)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Partes)
+        </dt>
+        <dd class="col-sm-10">
+            @for (var i = 0; i < Model.Partes.Count; i++)
+            {
+                <partial name="~/Views/Partes/_Parte.cshtml" for="Partes[i]" />
+                <hr />
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Alterar</a>
+    <a asp-action="Index" class="btn btn-light border-secondary">Voltar</a>
+</div>
+<br />
+<br />
+<br />
+<br />
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.parte').attr('disabled', true);
+        });
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<MPSP.Models.Parte>
+
+@{
+    ViewData["Title"] = "Teste C#";
+}
+
+<h1>Partes</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus-sign"></span> Adicionar
+    </a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cpf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sexo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CpfMascarado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sexo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">
+                    <span class="glyphicon glyphicon-edit"></span> Alterar
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
